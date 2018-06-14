@@ -3,7 +3,7 @@
 The default [Sapper](https://github.com/sveltejs/sapper) template. To clone it and get started:
 
 ```bash
-npx degit sveltejs/sapper-template my-app
+npx degit UnwrittenFun/sapper-template my-app
 cd my-app
 npm install # or yarn!
 npm run dev
