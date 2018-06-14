@@ -9,16 +9,17 @@ module.exports = {
 	entry: config.client.entry(),
 	output: config.client.output(),
 	resolve: {
-		extensions: ['.js', '.json', '.ts', '.html']
+		extensions: ['.js', '.json', '.ts', '.html'],
+		mainFields: ['svelte', 'module', 'browser', 'main']
 	},
 	module: {
 		rules: [
 			{
 				test: /\.html$/,
-				exclude: /node_modules/,
 				use: {
 					loader: 'svelte-loader',
 					options: Object.assign({}, require('../svelte.config'), {
+						dev: isDev,
 						hydratable: true,
 						hotReload: true,
 					})

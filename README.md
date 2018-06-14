@@ -11,10 +11,17 @@ npm run dev
 
 Open up [localhost:3000](http://localhost:3000) and start clicking around.
 
+Consult [sapper.svelte.technology](https://sapper.svelte.technology) for help getting started.
+
 
 ## Structure
 
-Sapper expects to find three directories in the root of your project — `assets`, `routes` and `templates`.
+Sapper expects to find three directories in the root of your project —  `app`, `assets` and `routes`.
+
+
+### app
+
+The [app](app) directory contains the entry points for your app — `client.js`, `server.js` and (optionally) a `service-worker.js` — along with your main `App.html` component.
 
 
 ### assets
@@ -45,21 +52,6 @@ There are three simple rules for naming the files that define your routes:
 * Files and directories with a leading underscore do *not* create routes. This allows you to colocate helper modules and components with the routes that depend on them — for example you could have a file called `routes/_helpers/datetime.js` and it would *not* create a `/_helpers/datetime` route
 
 
-### templates
-
-This directory should contain the following files at a minimum:
-
-* [app/client.js](app/client.js) — this module initialises Sapper
-* [app/service-worker.js](app/service-worker.js) — your app's service worker
-* [app/template.html](app/template.html) — a template for the page to serve for valid requests
-* [routes/4xx.html](routes/4xx.html) — a template for 4xx-range errors (such as 404 Not Found)
-* [routes/5xx.html](routes/5xx.html) — a template for 5xx-range errors (such as 500 Internal Server Error)
-
-Inside the HTML templates, Sapper will inject various values as indicated by `%sapper.xxxx%` tags. Inside JavaScript files, Sapper will replace strings like `__dev__` with the appropriate value.
-
-In lieu of documentation (bear with us), consult the files to see what variables are available and how they're used.
-
-
 ## Webpack config
 
 Sapper uses webpack to provide code-splitting, dynamic imports and hot module reloading, as well as compiling your Svelte components. As long as you don't do anything daft, you can edit the configuration files to add whatever loaders and plugins you'd like.
@@ -77,11 +69,17 @@ now
 ```
 
 
+## Using external components
+
+When using Svelte components installed from npm, such as [@sveltejs/svelte-virtual-list](https://github.com/sveltejs/svelte-virtual-list), Svelte needs the original component source (rather than any precompiled JavaScript that ships with the component). This allows the component to be rendered server-side, and also keeps your client-side app smaller.
+
+Because of that, it's essential that webpack doesn't treat the package as an *external dependency*. You can either modify the `externals` option in [webpack/server.config.js](webpack/server.config.js), or simply install the package to `devDependencies` rather than `dependencies`, which will cause it to get bundled (and therefore compiled) with your app:
+
+```bash
+yarn add -D @sveltejs/svelte-virtual-list
+```
+
+
 ## Bugs and feedback
 
 Sapper is in early development, and may have the odd rough edge here and there. Please be vocal over on the [Sapper issue tracker](https://github.com/sveltejs/sapper/issues).
-
-
-## License
-
-[LIL](LICENSE)

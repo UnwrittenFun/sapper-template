@@ -7,14 +7,14 @@ module.exports = {
 	output: config.server.output(),
 	target: 'node',
 	resolve: {
-		extensions: ['.js', '.json', '.ts', '.html']
+		extensions: ['.js', '.json', '.ts', '.html'],
+		mainFields: ['svelte', 'module', 'browser', 'main']
 	},
 	externals: Object.keys(pkg.dependencies),
 	module: {
 		rules: [
 			{
 				test: /\.html$/,
-				exclude: /node_modules/,
 				use: {
 					loader: 'svelte-loader',
 					options: Object.assign({}, require('../svelte.config'), {
